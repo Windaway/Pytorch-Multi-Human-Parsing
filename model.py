@@ -107,15 +107,15 @@ class MainBody(nn.Module):
         #512
         self.c0=nn.Conv2d(3,64,3,1,1,bias=False)
         #512
-        self.r1_0 = ConvBlocks(64,128)
-        self.r1_1 = IdentityBlock(128)
-        self.r1_2 = IdentityBlock(128)
+        self.r1_0 = ConvBlocks(64,64)
+        self.r1_1 = IdentityBlock(64)
+        self.r1_2 = IdentityBlock(64)
         #256
-        self.r2_0 = ConvBlocks(128,256)
-        self.r2_1 = IdentityBlock(256)
-        self.r2_2 = IdentityBlock(256)
+        self.r2_0 = ConvBlocks(64,128)
+        self.r2_1 = IdentityBlock(128)
+        self.r2_2 = IdentityBlock(128)
         #128
-        self.r3_0 = ConvBlocks(256,256)
+        self.r3_0 = ConvBlocks(128,256)
         self.r3_1 = IdentityBlock(256)
         self.r3_2 = IdentityBlock(256)
         self.r3_3 = IdentityBlock(256)
@@ -181,9 +181,8 @@ class gParseSeg(nn.Module):
         self.body=BaseMainBody
         self.seg_layer=nn.Conv2d(512,class_num,3,1,dilation_rate,dilation_rate)
         self.upsample=nn.UpsamplingBilinear2d(scale_factor=4)
-    def forward(self, x,y):
-        n=torch.cat([x,y],1)
-        n=self.merging(n)
+    def forward(self, x):
+        n=self.merging(x)
         n=self.body(n)
         n=self.seg_layer(n[-1])
         n=self.upsample(n)
@@ -235,11 +234,11 @@ class aSeg(nn.Module):
         self.c1=nn.Conv2d(16,32,5,2,2)
         self.c2=nn.Conv2d(32,64,5,1,2)
         self.c3=nn.Conv2d(64,128,5,2,2)
-        self.c4=nn.Conv2d(128,256,3,2,1)
-        self.c5=nn.Conv2d(256,256,3,2,1)
-        self.c6=nn.Conv2d(256,256,3,2,1)
-        self.c7=nn.Conv2d(256,128,5,1,0)
-        self.c5=nn.Conv2d(128,1,4,1,0)
+        self.c4=nn.Conv2d(128,128,3,2,1)
+        self.c5=nn.Conv2d(128,128,3,2,1)
+        self.c6=nn.Conv2d(128,128,3,2,1)
+        self.c7=nn.Conv2d(128,128,5,1,0)
+        self.c8=nn.Conv2d(128,1,4,1,0)
 
     def forward(self, x):
         #256
@@ -276,11 +275,11 @@ class aParseSeg(nn.Module):
         self.c1=nn.Conv2d(16,32,5,2,2)
         self.c2=nn.Conv2d(32,64,5,1,2)
         self.c3=nn.Conv2d(64,128,5,2,2)
-        self.c4=nn.Conv2d(128,256,3,2,1)
-        self.c5=nn.Conv2d(256,256,3,2,1)
-        self.c6=nn.Conv2d(256,256,3,2,1)
-        self.c7=nn.Conv2d(256,128,5,1,0)
-        self.c5=nn.Conv2d(128,1,4,1,0)
+        self.c4=nn.Conv2d(128,128,3,2,1)
+        self.c5=nn.Conv2d(128,128,3,2,1)
+        self.c6=nn.Conv2d(128,128,3,2,1)
+        self.c7=nn.Conv2d(128,128,5,1,0)
+        self.c8=nn.Conv2d(128,1,4,1,0)
 
     def forward(self, x):
         #256

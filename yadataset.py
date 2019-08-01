@@ -100,7 +100,7 @@ class MHPdataset(data.Dataset):
             img_w, img_h = image.size
             image,out_size=self.img_resize(image)
             image = np.asarray(image, np.float32)
-            image = image.transpose((2, 0, 1))
+            image = image.transpose((2, 0, 1))/255.
             return image,name,(img_w, img_h),out_size
         if self.mode=='val':
             name = datafiles["img"]
@@ -124,7 +124,7 @@ class MHPdataset(data.Dataset):
             parse,_=self.seg_resize(parse)
             instance,_=self.seg_resize(instance)
             image = np.asarray(image, np.float32)
-            image = image.transpose((2, 0, 1))
+            image = image.transpose((2, 0, 1))/255.
             seg = np.asarray(seg, np.float32)[:, : ,np.newaxis]
             seg = seg.transpose((2, 0, 1))
             instance = np.asarray(instance, np.float32)[:, : ,np.newaxis]
@@ -195,7 +195,7 @@ class MHPdataset(data.Dataset):
             instance=transforms.Pad(padding=(0, 0, pad_w, pad_h), fill=0, padding_mode='constant')(instance)
 
             image = np.asarray(img, np.float32)
-            image = image.transpose((2, 0, 1))
+            image = image.transpose((2, 0, 1))/255.
             seg = np.asarray(seg, np.float32)[:, : ,np.newaxis]
             seg = seg.transpose((2, 0, 1))
             instance = np.asarray(instance, np.float32)[:, : ,np.newaxis]

@@ -1,1 +1,7 @@
-原始代码应该是有问题，在定义时候没有设置默认参数，调用不指定应该有问题，至于Instance分割我没看明白，arxiv前后版本，之前ROI后面用了GCN，这块我看看怎么写好，做了前两级的网络和训练，为了并行没用BN或者同步BN实现。其他还没看。
+The code has passed train and val experiment, but I do not do any test about performance. Enjoy.
+
+
+You may need a GPU with at least 11GiB Memory!!! 
+
+
+Dataset can be download from https://github.com/ZhaoJ9014/Multi-Human-Parsing.
